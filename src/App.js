@@ -10,10 +10,7 @@ class App extends Component {
     current_page: null
   };
 
-  componentDidMount() {
-    this.makeHttpRequestWithPage(1);
-  }
-
+  //API request
   makeHttpRequestWithPage = async pageNumber => {
     let response = await fetch(
       `https://reqres.in/api/users?page=${pageNumber}`,
@@ -36,13 +33,16 @@ class App extends Component {
     });
   };
 
+  componentDidMount() {
+    this.makeHttpRequestWithPage(1);
+  }
+
   render() {
     console.log(this.state.users);
-    // console.log(this.state.total);
-    // console.log(this.state.per_page);
 
     let users, renderPageNumbers;
 
+    //Displaying the data from API
     if (this.state.users !== null) {
       users = this.state.users.map(user => (
         <tr key={user.id}>
@@ -91,6 +91,7 @@ class App extends Component {
           <tbody>{users}</tbody>
         </table>
 
+        {/* Showing Page Number and getting other data */}
         <div className={styles.pagination}>
           <span onClick={() => this.makeHttpRequestWithPage(1)}>&laquo;</span>
           {renderPageNumbers}
